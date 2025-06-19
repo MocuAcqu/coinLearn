@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <!-- 響應式網站關鍵設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>數錢學習小教室</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- 主要的應用程式容器 -->
+    <main class="app-container">
+
+        <section id="main-menu" class="screen active">
+            <header class="menu-header">
+                <img src="images/kuromi0.png" alt="吉祥物" class="mascot">
+                <h1>算錢小教室</h1>
+                <p class="subtitle">請選擇一個模式，開始學習吧！</p>
+            </header>
+            
+            <div class="mode-selection">
+                <!-- data-mode 屬性用來告訴 JavaScript 要啟動哪個模式 -->
+                <button class="mode-button" data-mode="mode1">
+                    <span class="mode-icon">①</span>
+                    <span class="mode-text">錢幣配對</span>
+                </button>
+                <button class="mode-button" data-mode="mode2">
+                    <span class="mode-icon">②</span>
+                    <span class="mode-text">湊出金額</span>
+                </button>
+                <button class="mode-button" data-mode="mode3">
+                    <span class="mode-icon">③</span>
+                    <span class="mode-text">情境購物</span>
+                </button>
+                <button class="mode-button" data-mode="mode4">
+                    <span class="mode-icon">④</span>
+                    <span class="mode-text">老師出題</span>
+                </button>
+                <button class="mode-button" data-mode="mode5">
+                    <span class="mode-icon">⑤</span>
+                    <span class="mode-text">小小商店</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="game-screen" class="screen">
+            <!-- 遊戲頂部欄：返回按鈕、模式標題 -->
+            <header class="game-header">
+                <button id="back-to-menu-btn" class="btn-back">🏠 返回主選單</button>
+                <h2 id="game-title">遊戲標題</h2>
+            </header>
+
+            <!-- 遊戲核心區域 -->
+            <div class="game-area">
+                
+                <!-- 1. 問題區：顯示題目文字、圖片或輸入框 -->
+                <div id="question-area" class="question-box">
+                    <!-- JavaScript 會在這裡放入題目，例如: "請湊出 38 元" -->
+                </div>
+
+                <!-- 2. 工作區：使用者放置錢幣的地方 -->
+                <div id="workspace-area" class="workspace">
+                    <div class="status-bar">
+                        <span>目前總計：</span>
+                        <span id="current-amount-display" class="amount-display">0</span>
+                        <span>元</span>
+                    </div>
+                    <div id="money-tray" class="money-tray-container">
+                        <!-- JavaScript 會在這裡放入使用者點選的錢幣圖片 -->
+                    </div>
+                </div>
+
+                <!-- 3. 操作按鈕區 -->
+                <div id="action-area" class="action-buttons">
+                    <button id="check-answer-btn" class="btn-confirm">確認送出</button>
+                    <button id="reset-btn" class="btn-secondary">清除重來</button>
+                </div>
+
+            </div>
+
+            <!-- 遊戲底部欄：可選擇的錢幣/鈔票 -->
+            <footer class="selection-panel">
+                <h3>點選下方的錢幣來付錢：</h3>
+                <div id="currency-selection" class="currency-list">
+                    <!-- JavaScript 會在這裡動態生成所有可選的錢幣 -->
+                </div>
+            </footer>
+        </section>
+
+        <section id="mode4-setup" class="screen">
+            <header class="game-header">
+                <button id="back-from-setup-btn" class="btn-back">🏠 返回主選單</button>
+                <h2>設定題目</h2>
+            </header>
+
+            <div class="setup-form">
+                <div class="form-group">
+                    <label for="amount-input">請輸入目標金額：</label>
+                    <input type="number" id="amount-input" placeholder="例如：88">
+                </div>
+
+                <div class="form-group">
+                    <label>請選擇可使用的錢幣：</label>
+                    <div id="currency-checklist-container" class="currency-checklist">
+                        <!-- JavaScript 會在這裡動態生成核取方塊 -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="start-challenge-btn" class="btn-confirm">開始挑戰!！</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="mode5-setup" class="screen">
+            <header class="game-header">
+                <button id="back-from-mode5-setup-btn" class="btn-back">🏠 返回主選單</button>
+                <h2>小小商店設定</h2>
+            </header>
+
+            <div class="setup-form">
+                <!-- 商品設定區 -->
+                <div class="form-group">
+                    <label>第一步：設定商品清單</label>
+                    <div id="product-list-container">
+                        <!-- JS 會在這裡動態新增商品輸入欄 -->
+                    </div>
+                    <button id="add-product-btn" class="btn-secondary">+ 新增一項商品</button>
+                </div>
+
+                <!-- 錢幣庫存設定區 -->
+                <div class="form-group">
+                    <label>第二步：設定學生錢包裡的錢</label>
+                    <div id="wallet-setup-container" class="currency-checklist">
+                        <!-- JS 會在這裡動態生成錢幣庫存輸入欄 -->
+                    </div>
+                </div>
+
+                <!-- 開始按鈕 -->
+                <div class="action-buttons">
+                    <button id="start-mode5-challenge-btn" class="btn-confirm">開始挑戰！!</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="feedback-modal" class="modal-overlay">
+            <div class="modal-content">
+                <img id="feedback-image" src="" alt="回饋圖示">
+                <h3 id="feedback-text"></h3>
+                <button id="next-question-btn">太棒了！下一題</button>
+            </div>
+        </div>
+
+         <div id="menu-modal" class="modal-overlay">
+            <div class="modal-content-full">
+                <img id="menu-image-display" src="" alt="菜單/價目表">
+            </div>
+        </div>
+    </main>
+</body>
+</html>
