@@ -2,18 +2,15 @@
 <html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
-    <!-- 響應式網站關鍵設定 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>數錢學習小教室</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-
-    <!-- 主要的應用程式容器 -->
     <main class="app-container">
 
+        <!-- ==================== 主選單畫面 (已重構) ==================== -->
         <section id="main-menu" class="screen active">
             <header class="menu-header">
                 <img src="images/kuromi0.png" alt="吉祥物" class="mascot">
@@ -21,101 +18,145 @@
                 <p class="subtitle">請選擇一個模式，開始學習吧！</p>
             </header>
             
-            <div class="mode-selection">
-                <!-- data-mode 屬性用來告訴 JavaScript 要啟動哪個模式 -->
-                <button class="mode-button" data-mode="mode1">
-                    <span class="mode-icon">①</span>
-                    <span class="mode-text">錢幣配對</span>
-                </button>
-                <button class="mode-button" data-mode="mode2">
-                    <span class="mode-icon">②</span>
-                    <span class="mode-text">湊出金額</span>
-                </button>
-                <button class="mode-button" data-mode="mode3">
-                    <span class="mode-icon">③</span>
-                    <span class="mode-text">情境購物</span>
-                </button>
-                <button class="mode-button" data-mode="mode4">
-                    <span class="mode-icon">④</span>
-                    <span class="mode-text">老師出題</span>
-                </button>
-                <button class="mode-button" data-mode="mode5">
-                    <span class="mode-icon">⑤</span>
-                    <span class="mode-text">小小商店</span>
-                </button>
+            <div class="categories-container">
+                <!-- 分類一：錢幣算法 -->
+                <div class="category-group">
+                    <h3>分類一：錢幣算法學習</h3>
+                    <div class="mode-selection">
+                        <button class="mode-button btn-category-1" data-mode="c1m1">判斷錢幣</button>
+                        <button class="mode-button btn-category-1" data-mode="c1m2">判斷金額</button>
+                    </div>
+                </div>
+
+                <!-- 分類二：找錢概念 -->
+                <div class="category-group">
+                    <h3>分類二：找錢概念學習</h3>
+                    <div class="mode-selection">
+                        <!-- 未來可在此新增模式 -->
+                        <button class="mode-button btn-category-2" disabled>即將推出</button>
+                    </div>
+                </div>
+
+                <!-- 分類三：其他學習 -->
+                <div class="category-group">
+                    <h3>分類三：其他學習</h3>
+                    <div class="mode-selection">
+                        <button class="mode-button btn-category-3" data-mode="c3m1">錢幣配對</button>
+                        <button class="mode-button btn-category-3" data-mode="c3m2">湊出金額</button>
+                        <button class="mode-button btn-category-3" data-mode="c3m3">情境購物</button>
+                        <button class="mode-button btn-category-3" data-mode="c3m4">小小商店</button>
+                    </div>
+                </div>
             </div>
         </section>
 
+        <!-- ==================== 遊戲主畫面 (已修改) ==================== -->
         <section id="game-screen" class="screen">
-            <!-- 遊戲頂部欄：返回按鈕、模式標題 -->
             <header class="game-header">
                 <button id="back-to-menu-btn" class="btn-back">🏠 返回主選單</button>
                 <h2 id="game-title">遊戲標題</h2>
             </header>
-
-            <!-- 遊戲核心區域 -->
             <div class="game-area">
-                
-                <!-- 1. 問題區：顯示題目文字、圖片或輸入框 -->
                 <div id="question-area" class="question-box">
-                    <!-- JavaScript 會在這裡放入題目，例如: "請湊出 38 元" -->
+                    <!-- JS 填入內容 -->
                 </div>
-
-                <!-- 2. 工作區：使用者放置錢幣的地方 -->
+                <div id="student-answer-area" class="student-answer-box">
+                    你的答案：
+                    <span id="student-answer-display" class="amount-display">0</span>
+                    元
+                </div>
                 <div id="workspace-area" class="workspace">
                     <div class="status-bar">
                         <span>目前總計：</span>
                         <span id="current-amount-display" class="amount-display">0</span>
                         <span>元</span>
+                        <!-- 顯示/隱藏總計的按鈕 -->
+                        <button id="toggle-sum-btn" class="btn-toggle-sum">👀</button>
                     </div>
                     <div id="money-tray" class="money-tray-container">
-                        <!-- JavaScript 會在這裡放入使用者點選的錢幣圖片 -->
+                        <!-- JS 填入內容 -->
                     </div>
                 </div>
-
-                <!-- 3. 操作按鈕區 -->
                 <div id="action-area" class="action-buttons">
+                    <button id="hint-btn" class="btn-secondary">💡 提示</button>
                     <button id="check-answer-btn" class="btn-confirm">確認送出</button>
                     <button id="reset-btn" class="btn-secondary">清除重來</button>
                 </div>
-
             </div>
+            <footer id="selection-panel" class="selection-panel">
+                <h3 id="selection-panel-title">點選下方的錢幣來付錢：</h3>
 
-            <!-- 遊戲底部欄：可選擇的錢幣/鈔票 -->
-            <footer class="selection-panel">
-                <h3>點選下方的錢幣來付錢：</h3>
+                <!-- 原有的錢幣選擇區 -->
                 <div id="currency-selection" class="currency-list">
                     <!-- JavaScript 會在這裡動態生成所有可選的錢幣 -->
+                </div>
+
+                <!-- 【新增】數字鍵盤區 -->
+                <div id="numpad-container" class="numpad">
+                    <button class="numpad-btn" data-key="7">7</button>
+                    <button class="numpad-btn" data-key="8">8</button>
+                    <button class="numpad-btn" data-key="9">9</button>
+                    <button class="numpad-btn" data-key="4">4</button>
+                    <button class="numpad-btn" data-key="5">5</button>
+                    <button class="numpad-btn" data-key="6">6</button>
+                    <button class="numpad-btn" data-key="1">1</button>
+                    <button class="numpad-btn" data-key="2">2</button>
+                    <button class="numpad-btn" data-key="3">3</button>
+                    <button class="numpad-btn btn-numpad-clear" data-key="clear">C</button>
+                    <button class="numpad-btn" data-key="0">0</button>
+                    <button class="numpad-btn btn-numpad-backspace" data-key="backspace">←</button>
                 </div>
             </footer>
         </section>
 
-        <section id="mode4-setup" class="screen">
+        <!-- ==================== 【新增】判斷錢幣設定畫面 (c1m1) ==================== -->
+        <section id="c1m1-setup" class="screen">
             <header class="game-header">
-                <button id="back-from-setup-btn" class="btn-back">🏠 返回主選單</button>
-                <h2>設定題目</h2>
+                <button id="back-from-c1m1-setup-btn" class="btn-back">🏠 返回主選單</button>
+                <h2>設定題目：判斷錢幣</h2>
             </header>
+            <div class="game-area">
+                <p>請點擊下方錢幣，將其加入題目區。點擊題目區的錢幣可移除。</p>
+                <div id="c1m1-question-preview" class="question-box money-tray-container">
+                    <!-- 老師設定的錢幣會顯示在這裡 -->
+                </div>
+                <div class="action-buttons">
+                    <button id="start-c1m1-challenge-btn" class="btn-confirm">出題完成，讓學生作答</button>
+                </div>
+            </div>
+            <footer class="selection-panel">
+                <h3>點選錢幣以加入題目：</h3>
+                <div id="c1m1-currency-selection" class="currency-list">
+                    <!-- JS 會在這裡動態生成所有可選的錢幣 -->
+                </div>
+            </footer>
+        </section>
 
+        <!-- ==================== 判斷金額設定畫面 (原 mode4-setup, 現為 c1m2) ==================== -->
+        <section id="c1m2-setup" class="screen">
+            <header class="game-header">
+                <button id="back-from-c1m2-setup-btn" class="btn-back">🏠 返回主選單</button>
+                <h2>設定題目：判斷金額</h2>
+            </header>
             <div class="setup-form">
                 <div class="form-group">
-                    <label for="amount-input">請輸入目標金額：</label>
-                    <input type="number" id="amount-input" placeholder="例如：88">
+                    <label for="c1m2-amount-input">請輸入目標金額：</label>
+                    <input type="number" id="c1m2-amount-input" placeholder="例如：88">
                 </div>
-
                 <div class="form-group">
                     <label>請選擇可使用的錢幣：</label>
-                    <div id="currency-checklist-container" class="currency-checklist">
-                        <!-- JavaScript 會在這裡動態生成核取方塊 -->
+                    <div id="c1m2-currency-checklist" class="currency-checklist">
+                        <!-- JS 會在這裡動態生成核取方塊 -->
                     </div>
                 </div>
-
                 <div class="action-buttons">
-                    <button id="start-challenge-btn" class="btn-confirm">開始挑戰!！</button>
+                    <button id="start-c1m2-challenge-btn" class="btn-confirm">開始挑戰！</button>
                 </div>
             </div>
         </section>
 
-        <section id="mode5-setup" class="screen">
+        <!-- ==================== 小小商店設定畫面 (原 mode5-setup, 現為 c3m4) ==================== -->
+        <section id="c3m4-setup" class="screen">
             <header class="game-header">
                 <button id="back-from-mode5-setup-btn" class="btn-back">🏠 返回主選單</button>
                 <h2>小小商店設定</h2>
@@ -145,12 +186,25 @@
                 </div>
             </div>
         </section>
-
+        
         <div id="feedback-modal" class="modal-overlay">
             <div class="modal-content">
-                <img id="feedback-image" src="" alt="回饋圖示">
-                <h3 id="feedback-text"></h3>
+                <div id="result-feedback">
+                    <img id="feedback-image" src="" alt="回饋圖示">
+                    <h3 id="feedback-text"></h3>
+                </div>
+
+                <div id="hint-container">
+                    <div id="hint-feedback" class="hint-content"></div>
+                    <div id="hint-pagination" class="pagination-controls">
+                        <button id="prev-hint-btn" class="hint-btn-pre_and_next">上一頁</button>
+                        <span id="hint-page-indicator"></span>
+                        <button id="next-hint-btn" class="hint-btn-pre_and_next">下一頁</button>
+                    </div>
+                </div>
+                
                 <button id="next-question-btn">太棒了！下一題</button>
+                <button id="close-hint-btn" class="btn-secondary">關閉提示</button>
             </div>
         </div>
 
